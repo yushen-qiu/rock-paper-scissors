@@ -11,45 +11,48 @@ function getComputerChoice() {
     return choice
 }
 
+function playRound(humanChoice, computerChoice) {
+    humanChoice = humanChoice.toLowerCase()
+    
+    if (humanChoice === computerChoice) {
+    
+    } else if ((humanChoice === "rock" && computerChoice === "scissors") 
+        || (humanChoice === "paper" && computerChoice === "rock")
+        || (humanChoice === "scissors" && computerChoice === "paper")) {
+            
+            humanScore++;
+    } else   {
+        
+        computerScore++;
+    }
+    score.textContent = `${computerScore} : ${humanScore}`;
+}
+
+let humanScore = 0
+let computerScore = 0
+
+const buttons = document.querySelectorAll("button")
+
+const score = document.querySelector(".score")
+
+const winner = document.querySelector(".winner")
+
+buttons.forEach((button) => {
+    button.addEventListener("click", function(){playGame(button.textContent, getComputerChoice())}) 
+})
+
 function getHumanChoice() {
     let choice = prompt("Please choose rock or paper or scissors")
     return choice
 }
 
-function playGame() {
-    let humanScore = 0
-    let computerScore = 0
-    function playRound(humanChoice, computerChoice) {
-        humanChoice = humanChoice.toLowerCase()
-        
-        if (humanChoice === computerChoice) {
-            console.log("It's a tie!")
-        } else if ((humanChoice === "rock" && computerChoice === "scissors") 
-            || (humanChoice === "paper" && computerChoice === "rock")
-            || (humanChoice === "scissors" && computerChoice === "paper")) {
-                console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-                humanScore++;
-        } else {
-            console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
-            computerScore++;
-        }
-    }
+function playGame(humanChoice, computerChoice) {
+    playRound(humanChoice, computerChoice)
 
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-
-        playRound(humanSelection, computerSelection);
+    if (humanScore === 5) {
+       winner.textContent =  "You won!" 
+    } else if (computerScore === 5) {
+        winner.textContent = "The Computer won!"
     }
-
-    if (humanScore > computerScore) {
-        console.log(`You are the winner! You won ${humanScore}/5 games.`)
-    } else if (humanScore < computerScore) {
-        console.log(`You are the loser! The computer won ${computerScore}/5 games.`)
-    } else {
-        console.log(`You tied with the computer!`)
-    }
+    
 }
-
-playGame()
-
